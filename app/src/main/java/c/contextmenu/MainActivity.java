@@ -15,18 +15,21 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    //declaration of list view
     ListView listView;
+  //string files for list view
     String[] names=
             {"ABC","DEF","GHI","JKL","MNO","PQR","STU","VWX","YZ1"};
     String[] contactNo=
             {"123","234","345","456","567","678","789","890","012"};
-    int x;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         listView=(ListView)findViewById(R.id.listview);
+
         CustomAdapter customAdapter= new CustomAdapter();
         listView.setAdapter(customAdapter);
 
@@ -53,10 +56,16 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
+
+            //attaching row.xml to list view in mainactivity.xml
+
             view=getLayoutInflater().inflate(R.layout.row,null);
+
             TextView nameview, numberview;
+
             nameview=view.findViewById(R.id.name);
             numberview=view.findViewById(R.id.phnumber);
+
             nameview.setText(names[i]);
             numberview.setText(contactNo[i]);
 
@@ -65,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //creating conext menu
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         menu.setHeaderTitle("Select Action");
@@ -81,13 +91,15 @@ public class MainActivity extends AppCompatActivity {
         AdapterView.AdapterContextMenuInfo info =
                  (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         int  position = info.position;
+
+        //providing action to the menu item of context menu
         switch (item.getItemId())
         {
             case 1:
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse("tel:"+contactNo[position]));
                 startActivity(intent);
-                
+
                 break;
             case 2:
                 Intent i = new Intent(Intent.ACTION_VIEW);
